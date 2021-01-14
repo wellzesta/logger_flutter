@@ -110,6 +110,7 @@ class AnsiParser {
       case 196:
         return dark ? Colors.red[300] : Colors.red[700];
       case 199:
+      default:
         return dark ? Colors.pink[300] : Colors.pink[700];
     }
   }

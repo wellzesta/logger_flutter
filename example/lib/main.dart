@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:logger_flutter/logger_flutter.dart';
 
+GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: '__navigator__');
+
 void main() {
   runApp(MyApp());
   log();
@@ -63,11 +65,14 @@ class HomeWidget extends StatelessWidget {
         children: [
           LogConsoleOnShake(
             dark: true,
+            navigatorKey: navigatorKey,
             child: Center(
               child: Text("Shake Phone to open Console."),
             ),
           ),
-          FlatButton(onPressed: () => LogConsole.open(context), child: Text("or click here to open Console")),
+          FlatButton(
+              onPressed: () => LogConsole.open(context),
+              child: Text("or click here to open Console")),
         ],
       ),
     );

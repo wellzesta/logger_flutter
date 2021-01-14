@@ -23,6 +23,23 @@ class LogConsole extends StatefulWidget {
     await Navigator.push(context, route);
   }
 
+  static Future<void> openWithKey(GlobalKey<NavigatorState> navigatorKey,
+      {bool dark}) async {
+    var logConsole = LogConsole(
+      showCloseButton: true,
+      dark: dark ??
+          Theme.of(navigatorKey.currentContext).brightness == Brightness.dark,
+    );
+    PageRoute route;
+    if (Platform.isIOS) {
+      route = CupertinoPageRoute(builder: (_) => logConsole);
+    } else {
+      route = MaterialPageRoute(builder: (_) => logConsole);
+    }
+
+    await navigatorKey?.currentState?.push(route);
+  }
+
   static void add(OutputEvent outputEvent, {int bufferSize = 20}) {
     while (_outputEventBuffer.length >= (bufferSize ?? 1)) {
       _outputEventBuffer.removeFirst();
@@ -63,7 +80,8 @@ class _LogConsoleState extends State<LogConsole> {
 
     _scrollController.addListener(() {
       if (!_scrollListenerEnabled) return;
-      var scrolledToBottom = _scrollController.offset >= _scrollController.position.maxScrollExtent;
+      var scrolledToBottom = _scrollController.offset >=
+          _scrollController.position.maxScrollExtent;
       setState(() {
         _followBottom = scrolledToBottom;
       });

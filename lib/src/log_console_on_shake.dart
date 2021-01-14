@@ -4,20 +4,26 @@ class LogConsoleOnShake extends StatefulWidget {
   final Widget child;
   final bool dark;
   final bool debugOnly;
+  final GlobalKey<NavigatorState> navigatorKey;
 
   LogConsoleOnShake({
     @required this.child,
+    @required this.navigatorKey,
     this.dark,
     this.debugOnly = true,
   });
 
   @override
-  _LogConsoleOnShakeState createState() => _LogConsoleOnShakeState();
+  _LogConsoleOnShakeState createState() =>
+      _LogConsoleOnShakeState(navigatorKey);
 }
 
 class _LogConsoleOnShakeState extends State<LogConsoleOnShake> {
   ShakeDetector _detector;
   bool _open = false;
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  _LogConsoleOnShakeState(this.navigatorKey);
 
   @override
   void initState() {
@@ -47,7 +53,7 @@ class _LogConsoleOnShakeState extends State<LogConsoleOnShake> {
     if (_open) return;
 
     _open = true;
-    await LogConsole.open(context, dark: widget.dark);
+    await LogConsole.openWithKey(navigatorKey, dark: widget.dark);
     _open = false;
   }
 
