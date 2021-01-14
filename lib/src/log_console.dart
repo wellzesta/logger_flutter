@@ -206,6 +206,15 @@ class _LogConsoleState extends State<LogConsole> {
           ),
           Spacer(),
           IconButton(
+            icon: Icon(Icons.copy),
+            onPressed: () {
+              Clipboard.setData(new ClipboardData(
+                  text: _filteredBuffer
+                      .map((e) => e.lowerCaseText)
+                      .reduce((value, element) => value + element)));
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
               setState(() {
