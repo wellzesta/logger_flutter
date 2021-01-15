@@ -3,14 +3,14 @@ part of logger_flutter;
 class LogConsoleOnShake extends StatefulWidget {
   final Widget child;
   final bool dark;
-  final bool debugOnly;
+  final bool enabled;
   final GlobalKey<NavigatorState> navigatorKey;
 
   LogConsoleOnShake({
     @required this.child,
     @required this.navigatorKey,
     this.dark,
-    this.debugOnly = true,
+    this.enabled = true,
   });
 
   @override
@@ -29,14 +29,15 @@ class _LogConsoleOnShakeState extends State<LogConsoleOnShake> {
   void initState() {
     super.initState();
 
-    if (widget.debugOnly) {
-      assert(() {
-        _init();
-        return true;
-      }());
-    } else {
-      _init();
-    }
+    // if (widget.enabled) {
+    //   assert(() {
+    //     _init();
+    //     return true;
+    //   }());
+    // } else {
+    //   _init();
+    // }
+    if (widget.enabled) _init();
   }
 
   @override
